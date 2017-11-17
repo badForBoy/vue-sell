@@ -65,7 +65,6 @@
                 let end = start + SIZE
                 ret.push(list.slice(start, end))
               }
-              console.log(ret)
               this.ret = ret
             }
           })

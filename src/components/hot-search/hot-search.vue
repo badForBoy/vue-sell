@@ -4,9 +4,11 @@
       <input type="text">
     </div>
     <div class="hot-list">
-      <span v-for="item in hotList">
+      <div class="list-box" ref="one">
+        <span v-for="item in hotList">
         {{item.search_word}}
       </span>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +25,10 @@
     },
     mounted() {
       this.getHotList()
+//      console.log(this.$refs.one.clientWidth)
+//      console.log(0.2 !== 0)
+    },
+    created() {
     },
     methods: {
       getHotList() {
@@ -43,22 +49,29 @@
 
   .hot-search
     background: $color-theme
-    padding: 0 20px
+    padding-bottom: 10px
     .search-box
-      padding: 15px 0
+      padding: 15px 20px
+      border-1px($color-theme-f)
       input
         height: 32px
         line-height: 32px
         padding: 5px 10px
+        box-sizing: border-box
+        width: 100%
     .hot-list
       height: 30px
       line-height: 30px
       font-size: 0
       overflow: hidden
-      overflow-x: auto
-      span
-        display: inline-block
-        font-size: $font-size-small
-        color: $color-text-f
-        margin: 0 2px
+      padding: 0 20px
+      .list-box
+        text-align: left
+        white-space: nowrap
+        overflow-x: auto
+        span
+          display: inline-block
+          font-size: $font-size-small
+          color: $color-text-f
+          margin-right: 12px
 </style>

@@ -2,7 +2,7 @@
   <div class="business-list">
     <!--<h2 class="title">推荐商家</h2>-->
     <ul class="list-wrapper">
-      <li v-for="(item, index) in businessList" class="item">
+      <li v-for="(item, index) in businessList" class="item" @click="goShop">
         <div class="pic">
           <img :src='imgUrl(item.image_hash)'>
         </div>
@@ -13,6 +13,7 @@
           <div class="m_b_5 text-item">
             <p>月售{{item.float_minimum_order_amount}}</p>
           </div>
+          <star :size="24" :scroll="item.restaurant_rating"></star>
           <div class="m_b_5 text-item">
             <p><span>￥{{item.original_price}}起送</span> | <span>配送费{{item.float_delivery_fee}}￥</span></p>
           </div>
@@ -25,6 +26,7 @@
 <script type="text/ecmascript-6">
   import { optionsGetFoods } from '../../common/js/options'
   import { ERR_OK } from '../../common/js/config'
+  import Star from '../../components/star/star.vue'
 
   export default{
     data() {
@@ -37,6 +39,9 @@
       this.getBusinessList()
     },
     methods: {
+      goShop() {
+        this.$router.push('/shop')
+      },
       imgUrl(hash) {
         return `http://fuss10.elemecdn.com/${hash.substr(0, 1)}/${hash.substr(1, 2)}/${hash.substr(3)}.jpeg?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/`
       },
@@ -51,11 +56,16 @@
                 }
               }
               this.businessList = foods[0]
+              console.log(this.businessList)
+
 //              console.log(foods[0])
 //              console.log(this.foods)
             }
           })
       }
+    },
+    components: {
+      Star
     }
   }
 </script>
