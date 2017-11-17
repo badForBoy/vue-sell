@@ -25,15 +25,11 @@
     },
     mounted() {
       this.getHotList()
-//      console.log(this.$refs.one.clientWidth)
-//      console.log(0.2 !== 0)
-    },
-    created() {
     },
     methods: {
       getHotList() {
         const option = Object.assign({}, optionsGetFoods, {'templates[]': 'main_template'})
-        this.axios.get('/api/v3/hot_search_words', {params: option})
+        this.axios.get('/api/shopping/v3/hot_search_words', {params: option})
           .then((response) => {
             if (response.status === ERR_OK) {
               this.hotList = response.data

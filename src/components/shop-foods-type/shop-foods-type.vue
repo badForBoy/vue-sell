@@ -5,7 +5,6 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { optionsGetFoods } from '../../common/js/options'
   import { ERR_OK } from '../../common/js/config'
 
   export default{
@@ -19,7 +18,12 @@
     },
     methods: {
       getFoods() {
-        this.axios.get('/api/v2/menu', {params: optionsGetFoods})
+        this.axios.get('/api/shopping/v2/menu', {
+          params: {
+            restaurant_id: 555696,
+            s_type: 0
+          }
+        })
           .then((response) => {
             if (response.status === ERR_OK) {
               let foods = []

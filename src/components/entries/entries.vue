@@ -40,7 +40,7 @@
       },
       getBusinessList() {
         const option = Object.assign({}, optionsGetFoods, {'templates[]': 'main_template'})
-        this.axios.get('/api/v2/entries', {params: option})
+        this.axios.get('/api/shopping/v2/entries', {params: option})
           .then((response) => {
             if (response.status === ERR_OK) {
               this.entries = response.data[0].entries
@@ -49,7 +49,7 @@
       },
       getList() {
         const option = Object.assign({}, optionsGetFoods, {'templates[]': 'main_template'})
-        this.axios.get('/api/v2/entries', {params: option})
+        this.axios.get('/api/shopping/v2/entries', {params: option})
           .then((response) => {
             if (response.status === ERR_OK) {
               /*

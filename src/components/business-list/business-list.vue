@@ -2,20 +2,20 @@
   <div class="business-list">
     <!--<h2 class="title">推荐商家</h2>-->
     <ul class="list-wrapper">
-      <li v-for="(item, index) in businessList" class="item" @click="goShop">
+      <li v-for="(item, index) in businessList" class="item" @click="goShop(item.id)">
         <div class="pic">
           <img :src='imgUrl(item.image_hash)'>
         </div>
         <div class="text">
           <div class="text-item">
-            <h2 class="text-header" v-html="item.restaurant_name"></h2>
+            <h2 class="text-header" v-html="item.name"></h2>
           </div>
           <div class="m_b_5 text-item">
-            <p>月售{{item.float_minimum_order_amount}}</p>
+            <p>月售{{item.distance}}</p>
           </div>
-          <star :size="24" :scroll="item.restaurant_rating"></star>
+          <star :size="24" :scroll="item.rating"></star>
           <div class="m_b_5 text-item">
-            <p><span>￥{{item.original_price}}起送</span> | <span>配送费{{item.float_delivery_fee}}￥</span></p>
+            <p><span>￥{{item.float_delivery_fee}}起送</span> | <span>配送费{{item.float_delivery_fee}}￥</span></p>
           </div>
         </div>
       </li>
@@ -24,7 +24,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { optionsGetFoods } from '../../common/js/options'
+  import { optionBusiness } from '../../common/js/options'
   import { ERR_OK } from '../../common/js/config'
   import Star from '../../components/star/star.vue'
 
@@ -39,27 +39,29 @@
       this.getBusinessList()
     },
     methods: {
-      goShop() {
-        this.$router.push('/shop')
+      goShop(id) {
+//        this.$emit('selectItem', id)
+        this.$router.push({
+          path: `/shop/${id}`
+        })
       },
       imgUrl(hash) {
-        return `http://fuss10.elemecdn.com/${hash.substr(0, 1)}/${hash.substr(1, 2)}/${hash.substr(3)}.jpeg?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/`
+//        return `http://fuss10.elemecdn.com/${hash.substr(0, 1)}/${hash.substr(1, 2)}/${hash.substr(3)}.jpeg?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/`
+        return ''
       },
       getBusinessList() {
-        this.axios.get('/api/v3/flash/init', {params: optionsGetFoods})
+        this.axios.get('/api/shopping/restaurants', {params: optionBusiness})
           .then((response) => {
+            console.log(response)
             if (response.status === ERR_OK) {
-              let foods = []
-              for (let i = 0; i < response.data.length; i++) {
-                if (response.data[i].foods.length > 2) {
-                  foods.push(response.data[i].foods)
-                }
-              }
-              this.businessList = foods[0]
+//              let foods = []
+//              for (let i = 0; i < response.data.length; i++) {
+//                if (response.data[i].foods.length > 2) {
+//                  foods.push(response.data[i].foods)
+//                }
+//              }
+              this.businessList = response.data
               console.log(this.businessList)
-
-//              console.log(foods[0])
-//              console.log(this.foods)
             }
           })
       }

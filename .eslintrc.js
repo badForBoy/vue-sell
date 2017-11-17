@@ -26,6 +26,8 @@ module.exports = {
     // 不检测一个新文件是否有空行
     'eol-last': 0,
     // 在一个function左括号的前面是否加space
-    'space-before-function-paren': 0
+    'space-before-function-paren': 0,
+    // 禁止对象字面量中出现重复的 key
+    "no-dupe-keys": 0,
   }
 }

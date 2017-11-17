@@ -2,7 +2,7 @@
   <div class="home">
     <hot-search></hot-search>
     <entries></entries>
-    <business-list></business-list>
+    <business-list :id="id" @select="selectItem"></business-list>
   </div>
 </template>
 
@@ -14,12 +14,18 @@
   export default {
     data() {
       return {
-        foods: ''
+        foods: '',
+        id: ''
       }
     },
     mounted() {
+      this.selectItem()
     },
     methods: {
+      selectItem(id) {
+        console.log(id)
+        this.id = id
+      }
     },
     components: {
       BusinessList,
