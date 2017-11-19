@@ -1,35 +1,35 @@
 <template>
   <div class="shop">
-    <router-view></router-view>
-    <shop-header :shopInfo="shopInfo" :bgimgurl="bgimgurl" :shopimgurl="shopimgurl"></shop-header>
-    <tab></tab>
-    <shop-foods-type></shop-foods-type>
+    <shop-header :shopInfo="shopInfo" :imgurl="imgurl" :bgimgurl="bgimgurl"></shop-header>
+    <div class="tab">
+      <router-link class="item" tag="span" :to="{path: `/shop/goods/${id}`}"><span>商品</span></router-link>
+      <router-link class="item" tag="span" :to="{path: `/shop/rating/${id}`}"><span>评价</span></router-link>
+      <router-link class="item" tag="span" :to="{path: `/shop/active/${id}`}"><span>店铺</span></router-link>
+    </div>
+    <div class="content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import ShopHeader from '../../components/shop-header/shop-header.vue'
-  import Tab from '../../components/tab/tab.vue'
-  import ShopFoodsType from '../../components/shop-foods-type/shop-foods-type.vue'
   import { ERR_OK } from '../../common/js/config'
   import { optionsRatings } from '../../common/js/options'
-  import { bgImgUrl, imgUrl } from '../../common/js/imgUrl'
+  import { imgUrl, bgImgUrl } from '../../common/js/imgUrl'
 
   export default{
     data() {
       return {
         shopInfo: {},
+        imgurl: '',
         bgimgurl: '',
-        shopimgurl: ''
-      }
-    },
-    props: {
-      id: {
-        type: Number
+        id: ''
       }
     },
     mounted() {
       this.getFoods()
+      this.id = this.$route.params.id
     },
     methods: {
       getFoods() {
@@ -39,16 +39,14 @@
             if (response.status === ERR_OK) {
               this.shopInfo = response.data
               console.log(this.shopInfo)
-              this.bgimgurl = bgImgUrl(this.shopInfo.image_path)
-              this.shopimgurl = imgUrl(this.shopInfo.image_path)
+              this.imgurl = imgUrl(response.data.image_path)
+              this.bgimgurl = bgImgUrl(response.data.image_path)
             }
           })
       }
     },
     components: {
-      ShopHeader,
-      Tab,
-      ShopFoodsType
+      ShopHeader
     }
   }
 </script>
@@ -63,4 +61,17 @@
     right: 0
     z-index: 10
     background: $color-background
+    .tab
+      display: flex
+      .item
+        flex: 1
+        display: inline-block
+        height: 34px
+        line-height: 36px
+        &.router-link-exact-active
+          color: $color-theme
+          span
+            border-bottom: 2px solid
+            display: inline-block
+            height: 34px
 </style>

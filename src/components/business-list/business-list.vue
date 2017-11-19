@@ -4,7 +4,7 @@
     <ul class="list-wrapper">
       <li v-for="(item, index) in businessList" class="item" @click="goShop(item.id)">
         <div class="pic">
-          <img :src='imgUrl(item.image_hash)'>
+          <img :src='imgUrl(item.image_path)'>
         </div>
         <div class="text">
           <div class="text-item">
@@ -34,34 +34,30 @@
         businessList: []
       }
     },
-    computed: {},
+    computed: {
+    },
     mounted() {
       this.getBusinessList()
     },
     methods: {
       goShop(id) {
-//        this.$emit('selectItem', id)
-        this.$router.push({
-          path: `/shop/${id}`
-        })
+        this.$emit('goshop', id)
       },
       imgUrl(hash) {
-//        return `http://fuss10.elemecdn.com/${hash.substr(0, 1)}/${hash.substr(1, 2)}/${hash.substr(3)}.jpeg?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/`
-        return ''
+        let url = ''
+        if (hash.indexOf('jpeg') > 0) {
+          url = `http://fuss10.elemecdn.com/${hash.substring(0, 1)}/${hash.substring(1, 2)}/${hash.substring(2)}.jpeg?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/`
+        } else {
+          url = `http://fuss10.elemecdn.com/${hash.substring(0, 1)}/${hash.substring(1, 2)}/${hash.substring(2)}.png?imageMogr/format/webp/thumbnail/!130x130r/gravity/Center/crop/130x130/`
+        }
+        return url
       },
       getBusinessList() {
         this.axios.get('/api/shopping/restaurants', {params: optionBusiness})
           .then((response) => {
-            console.log(response)
             if (response.status === ERR_OK) {
-//              let foods = []
-//              for (let i = 0; i < response.data.length; i++) {
-//                if (response.data[i].foods.length > 2) {
-//                  foods.push(response.data[i].foods)
-//                }
-//              }
               this.businessList = response.data
-              console.log(this.businessList)
+//              console.log(this.businessList)
             }
           })
       }

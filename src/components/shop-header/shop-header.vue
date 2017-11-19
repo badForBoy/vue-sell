@@ -1,11 +1,12 @@
 <template>
   <div class="shop-header" :style="bgImg">
     <div class="header-icon">
+      <span class="left" @click="back"><</span>
       {{shopInfo.name}}
     </div>
     <div class="header-parkage">
       <div class="pic">
-        <img :src="shopimgurl">
+        <img :src="imgurl">
       </div>
       <div class="text">
         <h2>{{shopInfo.name}}</h2>
@@ -17,10 +18,12 @@
       <span>新用户下单立减17元</span>
       <span class="right" @click="popup(shopInfo)">5个活动</span>
     </div>
+    <div class="mask"></div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+//  import { imgUrl, bgImgUrl } from '../../common/js/imgUrl'
   export default{
     props: {
       shopInfo: {
@@ -29,8 +32,8 @@
           return {}
         }
       },
-      bgimgurl: {},
-      shopimgurl: {}
+      bgimgurl: '',
+      imgurl: ''
     },
     data() {
       return {}
@@ -45,6 +48,9 @@
         this.$router.push({
           path: `/shop/${shopInfo.id}`
         })
+      },
+      back() {
+        this.$router.back()
       }
     }
   }
@@ -59,13 +65,28 @@
     height: 160px
     transform-origin: top
     background-size: cover
+    .mask
+      position :absolute
+      top: 0
+      bottom: 0
+      left: 0
+      right: 0
+      background-color :rgba(0, 0, 0, .5)
     .header-icon
       height: 36px
       line-height: 36px
+      z-index: 100
+      position: relative
+      color:$color-text-f
+      padding: 0 15px
+      .left
+        float: left
     .header-parkage
       box-sizing: border-box
       display: flex
       padding: 0 15px
+      z-index: 100
+      position: relative
       .pic
         width: 80px
         height: 80px
@@ -98,6 +119,8 @@
       color: $color-text-f
       text-align: left
       padding: 15px
+      z-index: 100
+      position: relative
       span
         display: inline-block
         &.right

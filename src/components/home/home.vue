@@ -1,8 +1,9 @@
 <template>
   <div class="home">
+    <!--<popup></popup>-->
     <hot-search></hot-search>
     <entries></entries>
-    <business-list :id="id" @select="selectItem"></business-list>
+    <business-list  @goshop="selectItem"></business-list>
   </div>
 </template>
 
@@ -10,27 +11,28 @@
   import BusinessList from '../../components/business-list/business-list.vue'
   import Entries from '../../components/entries/entries.vue'
   import HotSearch from '../../components/hot-search/hot-search.vue'
+  import Popup from '../../components/popup/popop.vue'
 
   export default {
     data() {
       return {
-        foods: '',
-        id: ''
+        foods: ''
       }
     },
     mounted() {
-      this.selectItem()
     },
     methods: {
       selectItem(id) {
-        console.log(id)
-        this.id = id
+        this.$router.push({
+          path: `/shop/goods/${id}`
+        })
       }
     },
     components: {
       BusinessList,
       Entries,
-      HotSearch
+      HotSearch,
+      Popup
     }
   }
 </script>
