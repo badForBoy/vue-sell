@@ -35,3 +35,10 @@ export const optionBusiness = {
   extra_filters: 'home',
   terminal: 'h5'
 }
+
+export const optionRating = {
+  has_content: true,
+  tag_name: '全部',
+  offset: 0,
+  limit: 0
+}

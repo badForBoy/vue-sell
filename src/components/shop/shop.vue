@@ -7,7 +7,9 @@
       <router-link class="item" tag="span" :to="{path: `/shop/active/${id}`}"><span>店铺</span></router-link>
     </div>
     <div class="content">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -60,9 +62,11 @@
     left: 0
     right: 0
     z-index: 10
-    background: $color-background
+    background: $color-background-d
     .tab
       display: flex
+      margin-bottom: 4px
+      background: $color-background
       .item
         flex: 1
         display: inline-block
@@ -74,4 +78,7 @@
             border-bottom: 2px solid
             display: inline-block
             height: 34px
+    .content
+      background: $color-background
+
 </style>
